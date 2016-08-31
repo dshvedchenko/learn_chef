@@ -14,13 +14,17 @@ remote_file '/opt/apache-tomcat-8.0.36.tar.gz' do
   source 'http://apache.volia.net/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
   mode '0755'
   action :create
+  not_if do ::File.exists?('/opt/apache-tomcat-8.0.36.tar.gz') end
+  notify :run, 'execute[unpack-tomcat]', :immediately
 end
 
 directory '/opt/tomcat' do
   action :create
 end
 
-execute 'tar xvf /opt/apache-tomcat-8.0.36.tar.gz -C /opt/tomcat --strip-components=1'
+execute 'unpack-tomcat' do
+ command 'tar xvf /opt/apache-tomcat-8.0.36.tar.gz -C /opt/tomcat --strip-components=1'
+end
 
 execute 'chgrp -R tomcat /opt/tomcat/conf'
 
