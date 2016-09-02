@@ -23,7 +23,7 @@ describe user('tomcat') do
   its('shell') { should eq '/bin/nologin' }
 end
 
-describe file ('/opt/tomcat') do
+describe file ("#{node['tomcat']['dir']}") do
   it { should exist }
   it { should be_directory }
 end

@@ -1,11 +1,11 @@
 
 package 'java-1.7.0-openjdk-devel'
 
-group 'tomcat'
+group "#{node['tomcat']['group']}"
 
-user 'tomcat' do
+user "#{node['tomcat']['user']}" do
   shell '/bin/nologin'
-  home '/opt/tomcat'
+  home "#{node['tomcat']['dir']}"
   manage_home false
   group 'tomcat'
 end
@@ -15,10 +15,10 @@ remote_file '/opt/apache-tomcat-8.0.36.tar.gz' do
   mode '0755'
   action :create
   not_if do ::File.exists?('/opt/apache-tomcat-8.0.36.tar.gz') end
-  notify :run, 'execute[unpack-tomcat]', :immediately
+  notifies :run, 'execute[unpack-tomcat]', :immediately
 end
 
-directory '/opt/tomcat' do
+directory "#{node['tomcat']['dir']}" do
   action :create
 end
 
@@ -26,16 +26,16 @@ execute 'unpack-tomcat' do
  command 'tar xvf /opt/apache-tomcat-8.0.36.tar.gz -C /opt/tomcat --strip-components=1'
 end
 
-execute 'chgrp -R tomcat /opt/tomcat/conf'
+execute "chgrp -R tomcat #{node['tomcat']['dir']}/conf"
 
-directory '/opt/tomcat/conf' do
+directory "#{node['tomcat']['dir']}/conf" do
   mode '0070'
 end
 
-execute 'chmod g+r /opt/tomcat/conf/*'
+execute "chmod g+r #{node['tomcat']['dir']}/conf/*"
 
 %w[ webapps work temp logs ].each do |path|
-  execute "chown -R tomcat /opt/tomcat/#{path}"
+  execute "chown -R tomcat #{node['tomcat']['dir']}/#{path}"
 end
 
 template '/etc/systemd/system/tomcat.service' do
