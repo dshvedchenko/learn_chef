@@ -6,4 +6,5 @@
 
 package 'python3-pip'
 
-execute 'pip3 install django'
+pip3 'django'
+# execute 'pip3 install django'
