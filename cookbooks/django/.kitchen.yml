@@ -17,18 +17,25 @@ suites:
       - recipe[django::default]
     verifier:
       inspec_tests:
-        - test/recipes
+        - test/default
     attributes:
   - name: install_pip
     run_list:
       - recipe[django::install_pip]
     verifier:
       inspec_tests:
-         - test/recipes
+         - test/install_pip
   - name: install_virtualenv
     run_list:
       - recipe[django::install_virtualenv]
     verifier:
       inspec_tests:
-        - test/recipes
+        - test/install_virtualenv
+    attributes:
+  - name: git_install
+    run_list:
+      - recipe[django::git_install]
+    verifier:
+      inspec_tests:
+        - test/git_install
     attributes:
