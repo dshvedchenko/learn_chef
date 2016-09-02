@@ -1,7 +1,7 @@
 #
 # Cookbook Name:: django
-# Recipe:: default
+# Recipe:: install_packages
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
-include_recipe 'django::install_packages'  
+package 'python-django'
