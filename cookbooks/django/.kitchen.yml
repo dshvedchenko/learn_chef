@@ -19,10 +19,19 @@ suites:
       inspec_tests:
         - test/recipes
     attributes:
+<<<<<<< HEAD
   - name: install_pip
     run_list:
       - recipe[django::install_pip]
     verifier:
       inspec_tests:
          - test/recipes
+=======
+  - name: install_virtualenv
+    run_list:
+      - recipe[django::install_virtualenv]
+    verifier:
+      inspec_tests:
+        - test/recipes
+>>>>>>> install_virtualenv
     attributes:
