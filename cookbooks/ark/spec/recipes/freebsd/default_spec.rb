@@ -12,7 +12,11 @@ describe 'ark::default' do
       %w[ libtool autoconf unzip rsync gmake gcc autogen gtar ]
     end
 
-    include_examples 'necessary_packages'
+    it "installs package necessary packages" do
+      packages.each do |package_name|
+        expect(chef_run).to install_package(package_name)
+      end
+    end
 
     it "tar binary" do
       attribute = chef_run.node['ark']['tar']

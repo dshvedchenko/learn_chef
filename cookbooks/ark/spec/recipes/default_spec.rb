@@ -4,20 +4,17 @@ describe 'ark::default' do
 
   context 'when no attributes are specified, on an unspecified platform' do
 
-    let(:platform_details) do
-      {}
-    end
-
-    include_examples 'chef_runner'
+    include_context 'chef_runner'
 
     let(:packages) do
       %w[ libtool autoconf unzip rsync make gcc ]
     end
 
-    include_examples 'necessary_packages'
-
-    let(:node) {chef_run.node}
-    let(:attribute) { node['ark']}
+    it "installs package necessary packages" do
+      packages.each do |package_name|
+        expect(chef_run).to install_package(package_name)
+      end
+    end
 
     it "does not install the gcc-c++ package" do
       expect(chef_run).not_to install_package("gcc-c++")
@@ -49,27 +46,40 @@ describe 'ark::default' do
   end
 
 
-  context 'when no attributes are specified, on Mac OSX' do
-    let(:platform_details) do
-      {platform: 'mac_os_x', version: '10.11.1'}
-    end
-
-    include_examples 'chef_runner'
-
-    it 'installs necessary packages' do
-      expect(chef_run).not_to install_package('libtool')
-      expect(chef_run).not_to install_package('autoconf')
-      expect(chef_run).not_to install_package('unzip')
-      expect(chef_run).not_to install_package('rsync')
-      expect(chef_run).not_to install_package('make')
-      expect(chef_run).not_to install_package('gcc')
-    end
-
-    it "tar binary" do
-      attribute = chef_run.node['ark']['tar']
-      expect(attribute).to eq '/usr/bin/tar'
-    end
-  end
+  # context 'when no attributes are specified, on Mac OSX' do
+  #
+  #   let(:platform_details) do
+  #     {platform: 'mac_os_x', version: '10.11.1'}
+  #   end
+  #
+  #   include_context 'chef_runner'
+  #
+  #   let(:platform_details) do
+  #     {platform: 'mac_os_x', version: '10.11.1'}
+  #   end
+  #
+  #
+  #   let(:packages) do
+  #     %w[ libtool autoconf unzip rsync make gcc]
+  #   end
+  #
+  #   it "installs package necessary packages" do
+  #     packages.each do |package_name|
+  #       expect(chef_run).to install_package(package_name)
+  #     end
+  #   end
+  #
+  #   # it "tar binary" do
+  #   #   binding.pry
+  #   #   expect(attribute['tar']).to eq "/usr/bin/tar"
+  #   # end
+  #
+  #   it "tar binary" do
+  #     attribute = chef_run.node['ark']['tar']
+  #     expect(attribute).to eq '/usr/bin/tar'
+  #   end
+  #
+  # end
 
   context 'when no attributes are specified, on RHEL' do
     let(:chef_run) do
@@ -81,7 +91,11 @@ describe 'ark::default' do
       %w[ libtool autoconf unzip rsync make gcc xz-lzma-compat bzip2 tar ]
     end
 
-    include_examples 'necessary_packages'
+    it "installs package necessary packages" do
+      packages.each do |package_name|
+        expect(chef_run).to install_package(package_name)
+      end
+    end
 
   end
 
@@ -95,7 +109,11 @@ describe 'ark::default' do
       %w[ libtool autoconf unzip rsync make gcc gtar autogen ]
     end
 
-    include_examples 'necessary_packages'
+    it "installs package necessary packages" do
+      packages.each do |package_name|
+        expect(chef_run).to install_package(package_name)
+      end
+    end
 
     it "tar binary" do
       attribute = chef_run.node['ark']['tar']

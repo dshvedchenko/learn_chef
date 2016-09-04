@@ -13,7 +13,11 @@ describe 'ark::default' do
       %w[ libtool autoconf unzip rsync make gcc autogen shtool pkg-config ]
     end
 
-    include_examples 'necessary_packages'
+    it "installs package necessary packages" do
+      packages.each do |package_name|
+        expect(chef_run).to install_package(package_name)
+      end
+    end
 
 
   end

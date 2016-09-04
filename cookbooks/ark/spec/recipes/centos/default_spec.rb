@@ -12,7 +12,11 @@ describe 'ark::default' do
       %w[ libtool autoconf unzip rsync make gcc bzip2 tar xz-lzma-compat]
     end
 
-    include_examples 'necessary_packages'
+    it "installs package necessary packages" do
+      packages.each do |package_name|
+        expect(chef_run).to install_package(package_name)
+      end
+    end
 
   end
 end
