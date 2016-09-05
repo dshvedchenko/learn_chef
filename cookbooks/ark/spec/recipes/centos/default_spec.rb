@@ -1,8 +1,14 @@
 require 'spec_helper'
 
-describe 'ark::default' do
+describe_recipe 'ark::default' do
 
   context 'when no attributes are specified, on CentOS' do
+
+
+    def node_attributes
+      {platform: 'centos', version: '6.7'}
+    end
+
     let(:chef_run) do
       runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '6.7')
       runner.converge(described_recipe)

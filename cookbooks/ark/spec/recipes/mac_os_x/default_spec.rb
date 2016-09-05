@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe 'ark::default' do
+describe_recipe 'ark::default' do
 
   context 'when no attributes are specified, on Mac OSX' do
 
-    include_context 'chef_runner'
+    # include_context 'chef_runner'
 
-    let(:platform_details) do
+    def node_attributes
       {platform: 'mac_os_x', version: '10.11.1'}
     end
 

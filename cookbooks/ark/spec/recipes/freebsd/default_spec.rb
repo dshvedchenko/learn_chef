@@ -1,12 +1,16 @@
 require 'spec_helper'
 
-describe 'ark::default' do
+describe_recipe 'ark::default' do
 
   context 'when no attributes are specified, on FreeBSD' do
-    let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new(platform: 'freebsd', version: '10.2')
-      runner.converge(described_recipe)
+
+    def node_attributes
+      {platform: 'freebsd', version: '10.2'}
     end
+    # let(:chef_run) do
+    #   runner = ChefSpec::SoloRunner.new(platform: 'freebsd', version: '10.2')
+    #   runner.converge(described_recipe)
+    # end
 
     let(:packages) do
       %w[ libtool autoconf unzip rsync gmake gcc autogen gtar ]

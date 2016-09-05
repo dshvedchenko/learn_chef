@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'ark::default' do
+describe_recipe 'ark::default' do
 
   context 'when no attributes are specified, on an unspecified platform' do
 
-    include_context 'chef_runner'
+    # include_context 'chef_runner'
 
     let(:packages) do
       %w[ libtool autoconf unzip rsync make gcc ]
@@ -82,10 +82,14 @@ describe 'ark::default' do
   # end
 
   context 'when no attributes are specified, on RHEL' do
-    let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new(platform: 'redhat', platform_family: 'rhel', version: '6.5')
-      runner.converge(described_recipe)
+    def node_attributes
+      {platform: 'redhat', platform_family: 'rhel', version: '6.5'}
     end
+
+    # let(:chef_run) do
+    #   runner = ChefSpec::SoloRunner.new(platform: 'redhat', platform_family: 'rhel', version: '6.5')
+    #   runner.converge(described_recipe)
+    # end
 
     let(:packages) do
       %w[ libtool autoconf unzip rsync make gcc xz-lzma-compat bzip2 tar ]
@@ -100,10 +104,16 @@ describe 'ark::default' do
   end
 
   context 'when no attributes are specified, on SmartOS' do
-    let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new(platform: 'smartos', version: '5.11')
-      runner.converge(described_recipe)
+
+    def node_attributes
+      {platform: 'smartos', version: '5.11'}
     end
+
+
+    # let(:chef_run) do
+    #   runner = ChefSpec::SoloRunner.new(platform: 'smartos', version: '5.11')
+    #   runner.converge(described_recipe)
+    # end
 
     let(:packages) do
       %w[ libtool autoconf unzip rsync make gcc gtar autogen ]
@@ -122,10 +132,15 @@ describe 'ark::default' do
   end
 
   context 'when no attributes are specified, on Windows' do
-    let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2')
-      runner.converge(described_recipe)
+
+    def node_attributes
+      {platform: 'windows', version: '2012R2'}
     end
+
+    # let(:chef_run) do
+    #   runner = ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2')
+    #   runner.converge(described_recipe)
+    # end
 
     it 'does not installs packages' do
       expect(chef_run).not_to install_package('libtool')
