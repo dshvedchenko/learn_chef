@@ -1,2 +1,2 @@
-default['redis']['version'] = '2.8.9'
+default['redis']['version'] = '3.0.0'
 default['redis']['retrieve'] = '/tmp'

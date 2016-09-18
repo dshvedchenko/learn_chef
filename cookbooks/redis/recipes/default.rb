@@ -10,7 +10,6 @@ package "tcl8.5"
 redis "#{version_number}" do
   retrieve_folder "#{retrieve_folder}"
   action :install
-  source "http://download.redis.io/releases/redis-#{version_number}.tar.gz"
 end
 
 service "redis_6379" do

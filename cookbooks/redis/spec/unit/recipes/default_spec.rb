@@ -9,11 +9,13 @@ require 'spec_helper'
 describe 'redis::default' do
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new(step_into: ['redis'])
+      runner = ChefSpec::ServerRunner.new(step_into: ['redis']) do |node,server|
+        node.default['redis']['version_number'] = '3.0.0'
+      end
       runner.converge(described_recipe)
     end
 
-    let(:redis_version) {'2.8.9'}
+    let(:redis_version) {'3.0.0'}
 
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
@@ -29,7 +31,7 @@ describe 'redis::default' do
     end
 
     it 'installs redis' do
-      expect(chef_run).to install_redis('2.8.9')
+      expect(chef_run).to install_redis("#{redis_version}")
     end
 
     it 'recieve remove redis archive' do
