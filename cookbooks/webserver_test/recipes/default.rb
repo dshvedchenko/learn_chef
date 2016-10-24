@@ -5,13 +5,15 @@ package_name =
     when 'ubuntu' then 'apache2'
     end
 
-
+# Install the httpd package.
 package package_name
 
+# Start and enable the httpd service.
 service service_name do
-  action [:start, :enable]
+  action [:enable, :start]
 end
 
+# Serve a custom home page.
 file '/var/www/html/index.html' do
   content '<html>
   <body>

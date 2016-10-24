@@ -32,6 +32,7 @@ describe 'webserver_test::default' do
   }
 
   platforms.each do |platform, platform_data|
+    # require 'pry'; binding.pry
     include_examples 'webserver_test', platform, *platform_data
   end
 end

@@ -8,9 +8,9 @@ describe service 'httpd' do
 end
 
 describe command 'curl localhost' do
-  its('stdout') {should match /hello/}
+  its('stdout') { should match(/hello/) }
 end
 
 describe port 80 do
-  it { should be_listening}
+  it { should be_listening }
 end
